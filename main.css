@@ -3,6 +3,10 @@ body {
   background: #f7f7f7;
 }
 
+.titlepage {
+  font-family: 'Roboto Slab', serif;
+}
+
 /* 
 box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 transition: 0.2s;
