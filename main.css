@@ -1,0 +1,40 @@
+body {
+  height: 100%;
+  background: #f7f7f7;
+}
+
+/* 
+box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+transition: 0.2s;
+  border-radius: 4px;
+  background: rgb(255, 255, 255);
+*/
+
+.btn {
+  margin: 5px 0 10px 0;
+}
+
+.taskBlock {
+  width: 100%;
+  background: #fff;
+  transition: 0.2s;
+  border-radius: 4px;
+  margin: 5px 0 5px 0;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+
+.taskBlock:hover {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+.form-control {
+  border: none;
+  color: #757575;
+}
+
+.form-control:focus {
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) inset !important;
+  border: none;
+}
