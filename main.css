@@ -42,3 +42,11 @@ transition: 0.2s;
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) inset !important;
   border: none;
 }
+
+.under {
+  text-decoration: underline;
+}
+
+.fixed-bottom {
+  ~padding: .25rem 0rem;
+}
