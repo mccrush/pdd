@@ -34,24 +34,18 @@ function ready() {
       for (let j = 0, len = arrMain[i].length; j < len; j++) {
         let taskBlock = document.createElement('div');
         taskBlock.className += 'taskBlock';
+        if (arrMain[i][j].import) taskBlock.className += ' bg-warning';
+        if (arrMain[i][j].check) taskBlock.className += ' checked';
+        taskBlock.setAttribute('onmousedown', 'return false');
         taskBlock.setAttribute('id', arrMain[i][j].id);
         taskBlock.setAttribute('alt', i);
         taskBlock.setAttribute('name', j);
         if (j !== 0) taskBlock.innerText = (i + 1) * 1 + '.' + j + ' ' + arrMain[i][j].title;
         else taskBlock.innerText = (i + 1) * 1 + ' ' + arrMain[i][j].title; // Убираеем 0 из первой крточки
-        taskBlock.addEventListener('mousedown', checkTask);
-        //taskBlock.addEventListener('click', selectTask);
-        taskBlock.addEventListener('dblclick', deletTask);
+        taskBlock.addEventListener('click', selectTask);
+        taskBlock.addEventListener('dblclick', checkTask);
         newCol.appendChild(taskBlock);
       }
-
-      // let butAdd = document.createElement('button');
-      // butAdd.className += 'btn btn-secondary btn-sm btn-block';
-      // butAdd.innerText = 'Add Task';
-      // butAdd.setAttribute('alt', i);
-      // butAdd.addEventListener('click', addDown); // Навешиваем обработчик клика
-      // newCol.appendChild(butAdd); // Вставляем Кнопку добавления в низ столбца
-      // rowMain.appendChild(newCol); // Вставляем столбец в строку
 
       let butAdd = document.createElement('input');
       butAdd.className += 'form-control mt-1';
@@ -77,7 +71,9 @@ function ready() {
 
       objTask = { // Создаем, заполняем, вся хуйня с объектом
         id: Date.now(),
-        title: this.value
+        title: this.value,
+        import: false,
+        check: false
       }
 
       let i = this.getAttribute('alt'); // Получаем номер столбца в котором была нажата кнопка
@@ -92,10 +88,31 @@ function ready() {
 
   // Функция выделения задачи при клике
   function selectTask(e) {
-    //e.target.classList.toggle('bg-warning');
-    e.target.classList.toggle('checked');
+    // Model, Модель данных
+    let i = this.getAttribute('alt'); // Получаем столбец
+    let j = this.getAttribute('name'); // И строку
+    let arrMain = loadArray(); // Подгружаем массив из ЛС
+    arrMain[i][j].import = arrMain[i][j].import ? false : true;
+
+    localStorage.setItem('arrmain', JSON.stringify(arrMain)); // Сохраняем в ЛС
+    showArray(arrMain); // Отрисовываем массив
+
+    // View, Представление
     //this.classList.toggle('bg-warning');
     //console.log(this.getAttribute('alt'), ':', this.getAttribute('name'), ' ', this.getAttribute('id'));
+  }
+
+  // Функция изменения статуса азадачи выполнено/не выполнено
+  function checkTask() {
+    let i = this.getAttribute('alt'); // Получаем столбец
+    let j = this.getAttribute('name'); // И строку
+    let arrMain = loadArray(); // Подгружаем массив из ЛС
+    arrMain[i][j].check = arrMain[i][j].check ? false : true;
+
+    localStorage.setItem('arrmain', JSON.stringify(arrMain)); // Сохраняем в ЛС
+    showArray(arrMain); // Отрисовываем массив
+
+    //this.classList.toggle('checked');
   }
 
   // Функция удаления задачи по двойному клику по ней
@@ -128,30 +145,7 @@ function ready() {
   let butAddColumn = document.querySelector('#butAddColumn');
   butAddColumn.addEventListener('click', addColumn);
 
-  // Функция изменения статуса азадачи выполнено/не выполнено
-  function checkTask(e) {
-    let timeLeft = 0;
-    let timeInterval = setInterval(() => {
-      timeLeft += 100;
-    }, 100);
-    this.addEventListener('mouseup', () => {
-      clearInterval(timeInterval);
-      if (timeLeft > 1500) {
-        //e.target.classList.toggle('bg-warning');
-        this.classList.toggle('bg-warning');
-        //this.style = 'opacity: 0.4';
-        //clearInterval(timeInterval);
-        console.log(timeLeft);
-        //timeLeft = 0;
-        //event.preventDefault();
-      } else {
-        //clearInterval(timeInterval);
-        //timeLeft = 0;
-        selectTask(e);
-      }
-      timeLeft = 0;
-    });
-  }
+
 }
 
 
