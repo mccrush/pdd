@@ -41,7 +41,7 @@ function ready() {
         taskBlock.setAttribute('alt', i);
         taskBlock.setAttribute('name', j);
         if (j !== 0) taskBlock.innerText = (i + 1) * 1 + '.' + j + ' ' + arrMain[i][j].title;
-        else taskBlock.innerText = (i + 1) * 1 + ' ' + arrMain[i][j].title; // Убираеем 0 из первой крточки
+        else taskBlock.innerText = (i + 1) * 1 + ' ' + arrMain[i][j].title; // Убираеем 0 из первой Задачи
         taskBlock.addEventListener('click', selectTask);
         taskBlock.addEventListener('dblclick', checkTask);
         newCol.appendChild(taskBlock);
@@ -69,7 +69,7 @@ function ready() {
     //console.log(event.keyCode);
     if (event.keyCode == 13 && this.value.trim() !== '') {
 
-      objTask = { // Создаем, заполняем, вся хуйня с объектом
+      objTask = { // Создаем, заполняем, вся херня с объектом...
         id: Date.now(),
         title: this.value,
         import: false,
@@ -78,7 +78,7 @@ function ready() {
 
       let i = this.getAttribute('alt'); // Получаем номер столбца в котором была нажата кнопка
       let arrMain = loadArray(); // Затем подгружаем массив из ЛС
-      arrMain[i] = arrMain[i] || []; // Хотя, похоже ни к чему проверять на пустоту...
+      arrMain[i] = arrMain[i] || []; // Если значения нет, вставляем пустой массив
       arrMain[i].push(objTask);
 
       localStorage.setItem('arrmain', JSON.stringify(arrMain)); // Сохраняем в ЛС
@@ -88,7 +88,6 @@ function ready() {
 
   // Функция выделения задачи при клике
   function selectTask(e) {
-    // Model, Модель данных
     let i = this.getAttribute('alt'); // Получаем столбец
     let j = this.getAttribute('name'); // И строку
     let arrMain = loadArray(); // Подгружаем массив из ЛС
@@ -96,10 +95,6 @@ function ready() {
 
     localStorage.setItem('arrmain', JSON.stringify(arrMain)); // Сохраняем в ЛС
     showArray(arrMain); // Отрисовываем массив
-
-    // View, Представление
-    //this.classList.toggle('bg-warning');
-    //console.log(this.getAttribute('alt'), ':', this.getAttribute('name'), ' ', this.getAttribute('id'));
   }
 
   // Функция изменения статуса азадачи выполнено/не выполнено
@@ -111,11 +106,9 @@ function ready() {
 
     localStorage.setItem('arrmain', JSON.stringify(arrMain)); // Сохраняем в ЛС
     showArray(arrMain); // Отрисовываем массив
-
-    //this.classList.toggle('checked');
   }
 
-  // Функция удаления задачи по двойному клику по ней
+  // Функция удаления задачи
   function deletTask() {
     let i = this.getAttribute('alt'); // Получаем столбец
     let j = this.getAttribute('name'); // И строку
@@ -124,6 +117,7 @@ function ready() {
 
     if (arrMain[i].length == 0) {
       arrMain.splice(i, 1); // И если это был последний элемент, удаляем весь столбец
+      // Ну кроме совсем посленей задачи. Тут Баг. Исправить!
     }
 
     localStorage.setItem('arrmain', JSON.stringify(arrMain)); // Сохраняем в ЛС
@@ -135,17 +129,17 @@ function ready() {
     let arrMain = loadArray(); // Подгружаем массив из ЛС
     let i = arrMain.length; // Создаем индекс нового столбца равный длине массива
     let j = i - 1;
-    if (arrMain[j].length !== 0 && arrMain.length < 6) { // Проверяем чтоб последний не был пустым или 6-ым
+    if (arrMain[j].length !== 0 && arrMain.length < 6) { // Проверяем чтобы последний столбец не был пустым или 6-ым
       arrMain[i] = []; // И вставляем туда пустой массив
+
       localStorage.setItem('arrmain', JSON.stringify(arrMain)); // Сохраняем в ЛС
       showArray(arrMain, i); // Отрисовываем массив
     }
   }
 
+  // Навешиваем обработчик клика на кнопку добавления столбца
   let butAddColumn = document.querySelector('#butAddColumn');
   butAddColumn.addEventListener('click', addColumn);
-
-
 }
 
 
