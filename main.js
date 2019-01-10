@@ -39,7 +39,8 @@ function ready() {
         taskBlock.setAttribute('name', j);
         if (j !== 0) taskBlock.innerText = (i + 1) * 1 + '.' + j + ' ' + arrMain[i][j].title;
         else taskBlock.innerText = (i + 1) * 1 + ' ' + arrMain[i][j].title; // Убираеем 0 из первой крточки
-        taskBlock.addEventListener('click', selectTask);
+        taskBlock.addEventListener('mousedown', checkTask);
+        //taskBlock.addEventListener('click', selectTask);
         taskBlock.addEventListener('dblclick', deletTask);
         newCol.appendChild(taskBlock);
       }
@@ -90,9 +91,11 @@ function ready() {
   }
 
   // Функция выделения задачи при клике
-  function selectTask() {
-    this.classList.toggle('bg-warning');
-    console.log(this.getAttribute('alt'), ':', this.getAttribute('name'), ' ', this.getAttribute('id'));
+  function selectTask(e) {
+    //e.target.classList.toggle('bg-warning');
+    e.target.classList.toggle('checked');
+    //this.classList.toggle('bg-warning');
+    //console.log(this.getAttribute('alt'), ':', this.getAttribute('name'), ' ', this.getAttribute('id'));
   }
 
   // Функция удаления задачи по двойному клику по ней
@@ -124,6 +127,31 @@ function ready() {
 
   let butAddColumn = document.querySelector('#butAddColumn');
   butAddColumn.addEventListener('click', addColumn);
+
+  // Функция изменения статуса азадачи выполнено/не выполнено
+  function checkTask(e) {
+    let timeLeft = 0;
+    let timeInterval = setInterval(() => {
+      timeLeft += 100;
+    }, 100);
+    this.addEventListener('mouseup', () => {
+      clearInterval(timeInterval);
+      if (timeLeft > 1500) {
+        //e.target.classList.toggle('bg-warning');
+        this.classList.toggle('bg-warning');
+        //this.style = 'opacity: 0.4';
+        //clearInterval(timeInterval);
+        console.log(timeLeft);
+        //timeLeft = 0;
+        //event.preventDefault();
+      } else {
+        //clearInterval(timeInterval);
+        //timeLeft = 0;
+        selectTask(e);
+      }
+      timeLeft = 0;
+    });
+  }
 }
 
 
