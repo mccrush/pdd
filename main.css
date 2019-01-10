@@ -50,3 +50,21 @@ transition: 0.2s;
 .checked {
   opacity: 0.4;
 }
+
+.delete {
+  position: absolute;
+  right: 17px;
+  width: 26px;
+  height: 26px;
+  background: url('trash.png') center center no-repeat;
+  opacity: .2;
+  transition: 0.2s
+}
+
+.delete:hover {
+  opacity: .5;
+}
+
+.opacity-0 {
+  opacity: 0;
+}

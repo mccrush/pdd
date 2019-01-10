@@ -44,6 +44,15 @@ function ready() {
         else taskBlock.innerText = (i + 1) * 1 + ' ' + arrMain[i][j].title; // Убираеем 0 из первой Задачи
         taskBlock.addEventListener('click', selectTask);
         taskBlock.addEventListener('dblclick', checkTask);
+        taskBlock.addEventListener('mouseenter', showTrash);
+        taskBlock.addEventListener('mouseleave', hideTrash);
+
+        let deletIcon = document.createElement('span');
+        deletIcon.className += 'delete opacity-0';
+        deletIcon.setAttribute('title', 'Удалить');
+        deletIcon.addEventListener('click', deletTask);
+        taskBlock.appendChild(deletIcon);
+
         newCol.appendChild(taskBlock);
       }
 
@@ -108,10 +117,14 @@ function ready() {
     showArray(arrMain); // Отрисовываем массив
   }
 
+  // Функция отображения карзины при наведении курсора на Задачу
+  function showTrash(e) { e.target.lastChild.classList.toggle('opacity-0'); }
+  function hideTrash(e) { e.target.lastChild.classList.toggle('opacity-0'); }
+
   // Функция удаления задачи
   function deletTask() {
-    let i = this.getAttribute('alt'); // Получаем столбец
-    let j = this.getAttribute('name'); // И строку
+    let i = this.parentNode.getAttribute('alt'); // Получаем столбец
+    let j = this.parentNode.getAttribute('name'); // И строку
     let arrMain = loadArray(); // Подгружаем массив из ЛС
     arrMain[i].splice(j, 1); // Удаляем соответвующий элемент массива
 
@@ -142,10 +155,6 @@ function ready() {
   butAddColumn.addEventListener('click', addColumn);
 }
 
-
 window.onload = function () {
   ready();
 };
-
-
-
