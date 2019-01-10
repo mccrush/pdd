@@ -42,7 +42,7 @@ function ready() {
         taskBlock.setAttribute('name', j);
         if (j !== 0) taskBlock.innerText = (i + 1) * 1 + '.' + j + ' ' + arrMain[i][j].title;
         else taskBlock.innerText = (i + 1) * 1 + ' ' + arrMain[i][j].title; // Убираеем 0 из первой Задачи
-        taskBlock.addEventListener('click', selectTask);
+        if (!arrMain[i][j].check) taskBlock.addEventListener('click', selectTask);
         taskBlock.addEventListener('dblclick', checkTask);
         taskBlock.addEventListener('mouseenter', showTrash);
         taskBlock.addEventListener('mouseleave', hideTrash);
