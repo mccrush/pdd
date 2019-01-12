@@ -122,7 +122,7 @@ function ready() {
   function hideTrash(e) { e.target.lastChild.classList.toggle('opacity-0'); }
 
   // Функция удаления задачи
-  function deletTask() {
+  function deletTask(e) {
     let i = this.parentNode.getAttribute('alt'); // Получаем столбец
     let j = this.parentNode.getAttribute('name'); // И строку
     let arrMain = loadArray(); // Подгружаем массив из ЛС
@@ -132,6 +132,9 @@ function ready() {
       arrMain.splice(i, 1); // И если это был последний элемент, удаляем весь столбец
       // Ну кроме совсем посленей задачи. Тут Баг. Исправить!
     }
+    //console.log(e.target.parentNode.nextElementSibling);
+    //e.target.parentNode.nextElementSibling.removeEventListener('click', selectTask);
+    e.target.parentNode.removeEventListener('click', selectTask);
 
     localStorage.setItem('arrmain', JSON.stringify(arrMain)); // Сохраняем в ЛС
     showArray(arrMain); // Отрисовываем массив
